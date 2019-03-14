@@ -1,6 +1,6 @@
 import Cocoa
 
-print("Hi, I'm Marc. Code at: https://github.com/glimpseio/Presentations")
+print("Hi, I'm Marc. The code for this talk is at: https://github.com/glimpseio/Presentations")
 
 struct RGBAColor : Equatable, Codable {
     var red, green, blue, alpha: CGFloat
@@ -151,6 +151,12 @@ extension NSView : Tree {
     static let childrenKeyPath = \NSView.subviews as WritableKeyPath
 }
 
+// AnyKeyPath
+// PartialKeyPath<Root>
+// KeyPath<Root, Value>
+// WritableKeyPath<Root, Value>
+// ReferenceWritableKeyPath<Root, Value>
+
 extension NSViewController : Tree {
     static let childrenKeyPath = \NSViewController.children as WritableKeyPath
 }
@@ -195,13 +201,6 @@ extension Sequence {
 }
 
 extension MutableCollection {
-    /// Change each element of the collection with the result of the given block
-    mutating func change(with block: (inout Element) -> ()) {
-        indices.forEach { i in block(&self[i]) }
-    }
-}
-
-extension MutableCollection {
     /// Projects through the specified keyPath
     subscript<T>(projecting keyPath: WritableKeyPath<Element, T>) -> [T] {
         get {
@@ -216,9 +215,17 @@ extension MutableCollection {
 
 layers[projecting: \.shapes[projecting: \.fill.defaulted.alpha]]
 
+extension MutableCollection {
+    /// Change each element of the collection with the result of the given block
+    mutating func change(with block: (inout Element) -> ()) {
+        indices.forEach { i in block(&self[i]) }
+    }
+}
+
 layers[projecting: \.shapes[projecting: \.fill.defaulted.alpha]].change { $0.change { $0 /= 2 } }
 
 layers[projecting: \.shapes[projecting: \.fill.defaulted.alpha]]
+
 
 extension MutableCollection {
     /// Selects the set of destinations of the keyPath; setting an empty set will be a no-op, and
@@ -240,4 +247,13 @@ layers.map({ $0.name })
 layers.flatMap({ $0.shapes }).flatMap({ $0.points })
 
 
-print("PG Done: \(Date())")
+infix operator ++ : AdditionPrecedence
+
+/// Shorthand operator for `WritableKeyPath<T, U>.append(path: WritableKeyPath<U, V>)`
+public func ++<T, U, V>(lhs: WritableKeyPath<T, U>, rhs: WritableKeyPath<U, V>) -> WritableKeyPath<T, V> {
+    return lhs.appending(path: rhs)
+}
+
+
+print(Date())
+
