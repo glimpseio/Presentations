@@ -196,8 +196,8 @@ extension Sequence {
 
 extension MutableCollection {
     /// Change each element of the collection with the result of the given block
-    mutating func change(with block: (Element) -> (Element)) {
-        indices.forEach { i in self[i] = block(self[i]) }
+    mutating func change(with block: (inout Element) -> ()) {
+        indices.forEach { i in block(&self[i]) }
     }
 }
 
@@ -216,7 +216,7 @@ extension MutableCollection {
 
 layers[projecting: \.shapes[projecting: \.fill.defaulted.alpha]]
 
-layers[projecting: \.shapes[projecting: \.fill.defaulted.alpha]].change { $0.change { $0 /2 } }
+layers[projecting: \.shapes[projecting: \.fill.defaulted.alpha]].change { $0.change { $0 /= 2 } }
 
 layers[projecting: \.shapes[projecting: \.fill.defaulted.alpha]]
 
