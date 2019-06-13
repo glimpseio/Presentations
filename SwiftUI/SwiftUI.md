@@ -44,6 +44,16 @@ struct ProfileEditor: View {                 // View is a swift-only protocol
 
 ---
 
+# [fit] “Learn once, apply everywhere.”
+
+![](https://developer.apple.com/home/images/hero-apple-platforms-20cc1/large_2x.jpg)
+
+---
+
+“SwiftUI was built on decades of experience in creating the most innovative and intuitive user interfaces in the world. Everything users love about Apple ecosystems, such as controls and platform-specific experiences, is beautifully presented in your code. SwiftUI is truly native, so your apps directly access the proven technologies of each platform with a small amount of code and an interactive design canvas.”
+
+---
+
 ```swift
 import SwiftUI                               // "Kit"–agnostic
 
@@ -291,20 +301,76 @@ struct ProfileEditor: View {                 // View is a swift-only protocol
 
 ---
 
-# Property Delegates
-## Swift Language Enhancements
-
+# Swift Language Enhancements
+1. Property Delegates
+2. 
+3. 
 
 ---
 
 # Tooling
 
-• Design & Preview in Code
-• Interface Builder no more
+• Design & Preview in XCode: “Hot Reload”
+• No more Interface Builder nib/xib diffing
 
 ---
 
-# Swift Sample
+# When to use SwiftUI:
+• Model consists of value types (structs & enums)
+• Apps w/out legacy OS requirements (iOS13+ / macOS10.15+)
+• Swift-only
+
+
+# When *not* to use SwiftUI:
+• Objective-C
+• Pre-iOS11 devices
+• Core Data
+• Mostly custom views
+
+---
+
+# Migration & Interoperability
+
+(App/UI)Kit views can be hosted in SwiftUI hierarchies
+
+    UIViewRepresentable
+    UIViewControllerRepresentable
+    NSViewRepresentable
+    NSViewControllerRepresentable
+
+(App/UI)Kit views can contain SwiftUI hierarchies
+    
+    UIHostingController
+    NSHostingController
+
+
+---
+
+# API Design
+
+• Builder pattern
+• Fluent interface w/ method chaining
+
+
+---
+
+# Catalyst: "UIKit for Mac"
+
+• SwiftUI 
+• Used for Stocks.app / News.app / Find My.app / etc.
+
+
+---
+
+# Prior Art
+
+• ReactiveX (Microsoft+)
+• React / ReactNative / Redux (Facebook+)
+• Flutter (Google)
+
+---
+
+# Swift & Flutter
 
 ```swift
 ForEach(userData.landmarks) { landmark in
@@ -316,6 +382,9 @@ ForEach(userData.landmarks) { landmark in
     }
 }
 ```
+
+    https://medium.com/flutter-nyc/building-the-swiftui-sample-app-in-flutter-67bb4f9c571c
+
 
 ---
 
@@ -345,22 +414,6 @@ SliverList(
 )
 ```
 
-
----
-
-# API Design
-
-• Builder pattern
-• Fluent interface w/ method chaining
-
-
----
-
-# Catalyst: "UIKit for Mac"
-
-• SwiftUI 
-• Used for Stocks.app / News.app / Find My.app / etc.
-
 ---
 
 # Combine
@@ -380,15 +433,20 @@ SliverList(
 
 ---
 
-# References
-
-https://developer.apple.com/documentation/swiftui
-https://developer.apple.com/tutorials/swiftui
-
 # *Bon Mots*
 
-"Learn once, apply everywhere."
 "Views are a function of state, not a sequence of events."
 "SwiftUI is the shortest path to building great apps on *every* device."
+
+# References
+
+    https://developer.apple.com/documentation/swiftui
+    https://developer.apple.com/tutorials/swiftui
+    https://github.com/glimpseio/Presentations
+
+--- 
+
+# [fit] Questions!
+
 
 
