@@ -31,6 +31,12 @@ struct ProfileEditor: View {                 // View is a swift-only protocol
 
 ---
 
+# [fit] “Learn once, apply everywhere.”
+
+![](https://developer.apple.com/home/images/hero-apple-platforms-20cc1/large_2x.jpg)
+
+---
+
 # What is a (UI/NS)View?
 
 ### `AppKit.NSView` – macOS ObjC class (circa 1989)
@@ -42,15 +48,13 @@ struct ProfileEditor: View {                 // View is a swift-only protocol
  
 ### **No APIs have been removed or deprecated**
 
----
-
-# [fit] “Learn once, apply everywhere.”
-
-![](https://developer.apple.com/home/images/hero-apple-platforms-20cc1/large_2x.jpg)
 
 ---
 
-“SwiftUI was built on decades of experience in creating the most innovative and intuitive user interfaces in the world. Everything users love about Apple ecosystems, such as controls and platform-specific experiences, is beautifully presented in your code. SwiftUI is truly native, so your apps directly access the proven technologies of each platform with a small amount of code and an interactive design canvas.”
+# Swift 5.1 Language Enhancements
+1. Opaque Result Types (SE-0244)
+2. Property Delegates (SE-0258)
+3. Function Builders (draft proposal)
 
 ---
 
@@ -301,13 +305,6 @@ struct ProfileEditor: View {                 // View is a swift-only protocol
 
 ---
 
-# Swift Language Enhancements
-1. Property Delegates
-2. 
-3. 
-
----
-
 # Tooling
 
 • Design & Preview in XCode: “Hot Reload”
@@ -316,16 +313,16 @@ struct ProfileEditor: View {                 // View is a swift-only protocol
 ---
 
 # When to use SwiftUI:
+• Swift-only
 • Model consists of value types (structs & enums)
 • Apps w/out legacy OS requirements (iOS13+ / macOS10.15+)
-• Swift-only
 
 
 # When *not* to use SwiftUI:
-• Objective-C
-• Pre-iOS11 devices
-• Core Data
-• Mostly custom views
+• Objective-C-mostly
+• Pre-iOS13 devices
+• Core Data Reliance
+• Mostly custom views (games, etc.)
 
 ---
 
@@ -351,22 +348,48 @@ struct ProfileEditor: View {                 // View is a swift-only protocol
 • Builder pattern
 • Fluent interface w/ method chaining
 
+```swift
+    Text("Hi!").color(.red).padding().cornerRadius(5).clipped().opacity(0.9)
+```
+
+
+---
+
+# Opaque Types Rationale
+
+```swift
+let view: _ModifiedContent
+  <_ModifiedContent
+    <_ModifiedContent
+      <_ModifiedContent
+        <Text, _PaddingLayout>, 
+        _ClipEffect<RoundedRectangle>>,
+     _ClipEffect<Rectangle>>, 
+    _OpacityEffect> 
+    = Text("Hi!").color(.red).padding().cornerRadius(5).clipped().opacity(0.9)
+```
+
+---
+
+# Combine
+• FRP for Swift
+• e.g., RxSwift / ReactiveCocoa / Mobius  
+• SwiftUI + Combine == AppKit + Cocoa Bindings
+
+---
+
+# Prior Art
+• ReactiveX (Microsoft+)
+• React / ReactNative / Redux (Facebook+)
+• Flutter (Google)
 
 ---
 
 # Catalyst: "UIKit for Mac"
 
-• SwiftUI 
+• SwiftUI on macOS in "UIKit Mode"
+• vs. SwiftUI on macOS in "AppKit Mode"
 • Used for Stocks.app / News.app / Find My.app / etc.
-
-
----
-
-# Prior Art
-
-• ReactiveX (Microsoft+)
-• React / ReactNative / Redux (Facebook+)
-• Flutter (Google)
 
 ---
 
@@ -391,17 +414,12 @@ ForEach(userData.landmarks) { landmark in
 # Flutter Equivalent
 
 ```js
-SliverList(
-  delegate: SliverChildBuilderDelegate(
-    (context, index) {
+SliverList(delegate: SliverChildBuilderDelegate((context, index) {
       final landmark = landmarks[index];
-      return LandmarkCell(
-        landmark: landmark,
-        onTap: () {
+      return LandmarkCell(landmark: landmark, onTap: () {
           Navigator.push(
             context,
-            CupertinoPageRoute(
-              builder: (context) => LandmarkDetail(
+            CupertinoPageRoute(builder: (context) => LandmarkDetail(
                 landmark: landmark,
               ),
             ),
@@ -416,9 +434,20 @@ SliverList(
 
 ---
 
-# Combine
-• FRP for Swift
-• e.g., RxSwift / ReactiveCocoa / Mobius  
+# View Collapsing
+
+SwiftUI can decide whether to render your Views as `UIView`s or `CALayer`s:
+
+```swift
+  View.drawingGroup()
+  View.compositingGroup()
+```
+
+    Session 237: Building Custom Views with SwiftUI (time 37:00)
+
+---
+
+![](/Users/marc/Downloads/237_sd_building_custom_views_with_swiftui.mp4)
 
 ---
 
