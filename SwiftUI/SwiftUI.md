@@ -1,9 +1,9 @@
 
 
 ```swift
-import SwiftUI                               // "Kit"–agnostic
+import SwiftUI                               // (NS/UI)Kit–agnostic
 
-struct ProfileEditor: View {                 // View is a swift-only protocol
+struct ProfileEditor: View {                 // View is a Swift protocol
     @Binding var profile: Profile            // @Binding is a property delegate
     @State private var showAdvanced: Bool    // @State is another property delegate
     var body: some View {                    // `some` is an "opaque type"
