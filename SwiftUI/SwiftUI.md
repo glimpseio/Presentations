@@ -21,6 +21,27 @@ About Me
   
 ---
 
+# What **is** SwiftUI?
+
+- Declarative user-interface framework
+- Announced @WWDC 2019,
+- Available iOS13/macOS10.15
+- Works on top of UIKit/AppKit/WatchKit
+
+---
+
+# What *isn't* SwiftUI?
+
+- *Not* a replacement for UIKit/AppKit
+- *Not* a route to building apps for Android/Windows/Linux/Web
+
+---
+
+# Demo
+
+## [fit]`https://github.com/glimpseio/Presentations/`
+#### [fit] `…/blob/master/SwiftUI/SwiftUIShapeShifter/SwiftUIShapeShifter/ShapeShifter.swift`
+
 # Disclaimer
 
 ## Information current as of *yesterday* (July 29, 2019)
