@@ -27,29 +27,6 @@ struct ShapeShifterModel : Hashable, Codable {
 
 import SwiftUI
 
-extension ShapeShifterModel.HSL {
-    /// Convert the `HSL` model into a `SwiftUI.Color`
-    var color: SwiftUI.Color {
-        Color(hue: hue, saturation: saturation, brightness: brightness, opacity: opacity)
-    }
-
-    /// Static constants for pre-defined colors
-    static let swatches = [
-        Self(saturation: 0.00, brightness: 0.00), // black
-        Self(brightness: 1.00), // red
-        Self(hue: 0.33), // green
-        Self(hue: 0.66), // blue
-        Self(hue: 0.50), // cyan
-        Self(hue: 0.16), // yellow
-        Self(hue: 0.83), // magenta
-        Self(hue: 0.08), // orange
-        Self(hue: 0.83, brightness: 0.50), // purple
-        Self(hue: 0.08, saturation: 0.66, brightness: 0.60), // brown
-        Self(saturation: 0.00), // white
-    ]
-}
-
-// MARK: Views
 struct ShapeShifterRootView: SwiftUI.View {
     @EnvironmentObject var env: ShapeShifterEnv
 
@@ -139,6 +116,29 @@ struct SwatchPicker: SwiftUI.View  {
         }
     }
 }
+
+extension ShapeShifterModel.HSL {
+    /// Convert the `HSL` model into a `SwiftUI.Color`
+    var color: SwiftUI.Color {
+        Color(hue: hue, saturation: saturation, brightness: brightness, opacity: opacity)
+    }
+
+    /// Static constants for pre-defined colors
+    static let swatches = [
+        Self(saturation: 0.00, brightness: 0.00), // black
+        Self(brightness: 1.00), // red
+        Self(hue: 0.33), // green
+        Self(hue: 0.66), // blue
+        Self(hue: 0.50), // cyan
+        Self(hue: 0.16), // yellow
+        Self(hue: 0.83), // magenta
+        Self(hue: 0.08), // orange
+        Self(hue: 0.83, brightness: 0.50), // purple
+        Self(hue: 0.08, saturation: 0.66, brightness: 0.60), // brown
+        Self(saturation: 0.00), // white
+    ]
+}
+
 
 /// A slider that shows a text label with the value
 struct PercentSlider: SwiftUI.View {
@@ -230,7 +230,6 @@ final class ShapeShifterEnv : BindableObject {
 extension ShapeShifterModel {
     /// Model is persisted to user defaults
     func save() throws {
-        print("save")
         let shapeData = try JSONEncoder().encode(self)
         UserDefaults.standard.set(shapeData, forKey: "shapeData")
     }
