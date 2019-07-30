@@ -53,15 +53,15 @@ struct ShapeShifterRootView: SwiftUI.View {
     @EnvironmentObject var env: ShapeShifterEnv
 
     var body: some SwiftUI.View {
-        HStack {
-            ShapeView(model: $env.model).scaledToFit().padding()
+        VStack {
+            ShapePreview(model: $env.model).scaledToFit().padding()
             Divider()
             ShapeInspector(model: $env.model)
         }
     }
 }
 
-struct ShapeView: SwiftUI.View {
+struct ShapePreview: SwiftUI.View {
     @Binding var model: ShapeShifterModel
 
     var body: some SwiftUI.View {
@@ -108,15 +108,13 @@ struct UndoRedoButtons: SwiftUI.View {
         HStack {
             Button("Undo") { self.env.undoManager?.undo() }
                 .disabled(self.env.undoManager?.canUndo == false)
-                .font(.title)
-                .buttonStyle(.default)
+                .font(.title).buttonStyle(.default)
 
             Spacer()
 
             Button("Redo") { self.env.undoManager?.redo() }
                 .disabled(self.env.undoManager?.canRedo == false)
-                .font(.title)
-                .buttonStyle(.default)
+                .font(.title).buttonStyle(.default)
 
         }.padding()
     }
@@ -183,10 +181,11 @@ struct PercentSlider: SwiftUI.View {
 #if DEBUG
 struct ShapeShifterRootView_Previews: PreviewProvider {
     static var previews: some View {
-        ShapeShifterRootView()
-            .environmentObject(ShapeShifterEnv())
-            .previewDevice("iPhone SE")
-            .previewLayout(.sizeThatFits)
+        let env = ShapeShifterEnv()
+        env.undoManager = UndoManager()
+        return ShapeShifterRootView()
+            .environmentObject(env)
+            .previewDevice("iPhone SE") // the best device
     }
 }
 #endif
@@ -208,13 +207,20 @@ final class ShapeShifterEnv : BindableObject {
                     }
                 }
             }
-            // inform listeners of changes
-            willChange.send(newModel)
+
+            willChange.send(newModel) // inform listeners of changes
         }
     }
 }
 
 import UIKit
+
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    func application(_ application: UIApplication, configurationForConnecting session: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+        return UISceneConfiguration(name: "Default Configuration", sessionRole: session.role)
+    }
+}
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -230,12 +236,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             // undo manager is created only when the window is shown
             store.undoManager = window.undoManager
         }
-    }
-}
-
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-    func application(_ application: UIApplication, configurationForConnecting session: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: session.role)
     }
 }
