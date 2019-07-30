@@ -1,11 +1,10 @@
 
-
 ```swift
 import SwiftUI                               // (NS/UI)Kit–agnostic
 
 struct ProfileEditor: View {                 // View is a Swift protocol
-    @Binding var profile: Profile            // @Binding is a property delegate
-    @State private var showAdvanced: Bool    // @State is another property delegate
+    @Binding var profile: Profile            // @Binding is a property wrapper
+    @State private var showAdvanced: Bool    // @State is another property wrapper
     var body: some View {                    // `some` is an "opaque type"
         List {                               // @_functionBuilder ViewBuilder 
             HStack {                         // Lightweight builder for a stack view
@@ -24,37 +23,92 @@ struct ProfileEditor: View {                 // View is a Swift protocol
 
 ---
 
-# SwiftUI
-## Native & Declarative UI Framework for Apple Platforms
+# [fit] **SwiftUI**
+## **Declarative** User-Interface Development 
 ### Marc Prud'hommeaux <*marc@glimpse.io*>
-#### Boston CocoaHeads, June 13, 2019
+#### SwiftFest Boston, July 30, 2019
 
 ---
 
-# [fit] “Learn once, apply everywhere.”
+About Me
 
-![](https://developer.apple.com/home/images/hero-apple-platforms-20cc1/large_2x.jpg)
+- Independent iOS developer since 2008
+- Local to Boston area
+- Swift Consultation & Training:
+  1. UI Development
+  1. Swift migration
+  1. **NEW** SwiftUI adoption 
+  
+  ### marc@glimpse.io
+  
+---
+
+# Disclaimer
+
+## Information current as of *yesterday* (July 29, 2019)
+-  Xcode 11 beta 4
+- macOS 10.15 (“Catalina”) beta 4
 
 ---
 
-# What is a (UI/NS)View?
+# SwiftUI Features
 
-### `AppKit.NSView` – macOS ObjC class (circa 1989)
-### `UIKit.UIView` - iOS/tvOS/watchOS ObjC class (circa 2008)
+- Declarative View Builder Syntax
+- Live previews
+- Bindings & State Management
+- Cross(*-ish*)-platform development
+- Interoperability with existing Cocoa(Touch) views
 
-### `SwiftUI.View` - Cross-platform Swift protocol (circa 2019)
 
-  Designed to be implemented by Swift value types (structs & enums) that *builds* and *maintains* hierarchies of `NSView`s, `UIView`s, and `CALayer`s.
+---
+
+# What is gained?
+
+---
+
+## **Gains**
+
+- UI in Code
+  - Single Source of Truth
+  - Better Diffing & Source Control
+- Declarative View Builders
+  - Automatic view flattening
+- State Management
+  - Bindings
+  
+---
+
+# What is lost?
+
+- Pre-iOS13/macOS10.15 Support
+- Interface Builder
+  - Design & Development Separation of Concerns
+  - Mitigated by Xcode-integrated *Preview Content*
+  
+---
+
+# What is a (UI/NS/SwiftUI)View?
+
+- `AppKit.NSView` – macOS ObjC class (1989 – *NeXTSTEP*)
+- `UIKit.UIView` - iOS ObjC class (2008 – *Cocoa Touch*)
+    - Objective-C **reference** type that directly represents a drawable instance on the screen
+  
+- `SwiftUI.View` - Cross-platform Swift protocol (circa 2019)
+    - Swift **value** type that that *builds* and *maintains* hierarchies of `NSView`s, `UIView`s, and `CALayer`s.
  
-### **No APIs have been removed or deprecated**
-
-
 ---
 
 # Swift 5.1 Language Enhancements
 1. Opaque Result Types (SE-0244)
-2. Property Delegates (SE-0258)
+2. Property Wrappers (SE-0258)
 3. Function Builders (draft proposal)
+
+
+
+
+
+
+
 
 ---
 
@@ -316,13 +370,16 @@ struct ProfileEditor: View {                 // View is a swift-only protocol
 • Swift-only
 • Model consists of value types (structs & enums)
 • Apps w/out legacy OS requirements (iOS13+ / macOS10.15+)
+• State-intensive apps
 
+---
 
 # When *not* to use SwiftUI:
 • Objective-C-mostly
 • Pre-iOS13 devices
 • Core Data Reliance
 • Mostly custom views (games, etc.)
+• Need storyboards
 
 ---
 
@@ -340,6 +397,16 @@ struct ProfileEditor: View {                 // View is a swift-only protocol
     UIHostingController
     NSHostingController
 
+---
+
+# Nicities
+
+SwiftUI vs. Swift + Interface Builder:
+
+We no longer have to argue about programmatic or storyboard-based design, because SwiftUI gives us both at the same time.
+We no longer have to worry about creating source control problems when committing user interface work, because code is much easier to read and manage than storyboard XML.
+We no longer need to worry so much about stringly typed APIs – there are still some, but significantly fewer.
+We no longer need to worry about calling functions that don’t exist, because our user interface gets checked by the Swift compiler.
 
 ---
 
@@ -447,35 +514,75 @@ SwiftUI can decide whether to render your Views as `UIView`s or `CALayer`s:
 
 ---
 
+Should I use SwiftUI?
+
+  • Target OS
+  • Swift-mostly app
+  • Cross-platorm requirements
+  • State management
+
+---
+
+When is a (NS/UI)View not a view? When it is a (SwiftUI.)View
+
+---
+
+Nicities
+
+  • Good Accessibility support
+  
+---
+
+Warts
+
+  • Compiler error red herrings
+  • Missing controls (Color picker / outline view)
+  • Limit of 10 controls per view builder:  
+
+  "Type of expression is ambiguous without more context"
+
+  "Function declares an opaque return type, but has no return statements in its body from which to infer an underlying type"
+
+  "Function declares an opaque return type, but the return statements in its body do not have matching underlying types"
+
+  "Property definition has inferred type 'some View', involving the 'some' return type of another declaration"
+
+  "Closure containing control flow statement cannot be used with function builder 'ViewBuilder'"
+  
+  • Excess matching foils code-completion
+  • Lack of complex control flow statements in "DSL"
+
+---
+
+Tips
+
+  • Break up large views
+  • Keep view construction quick
+
+
+---
+
 ![](/Users/marc/Downloads/237_sd_building_custom_views_with_swiftui.mp4)
 
 ---
 
-### Videos: https://developer.apple.com/videos/wwdc2019/
+## [fit] **WWDC VIDEOS**
 
-• 204: Introducing SwiftUI: Building Your First App
-• 216: SwiftUI Essentials
-• 226: Data Flow Through SwiftUI
-• 231: Integrating SwiftUI
-• 237: Building Custom Views with SwiftUI
-• 240: SwiftUI On All Devices
+## https://developer.apple.com/videos/wwdc2019/
+
+**204**: Introducing SwiftUI: Building Your First App
+**216**: SwiftUI Essentials
+**226**: Data Flow Through SwiftUI
+**231**: Integrating SwiftUI
+**237**: Building Custom Views with SwiftUI
+**240**: SwiftUI On All Devices
 
 ---
 
-# *Bon Mots*
+# [fit] –**Q&A**–
 
-"Views are a function of state, not a sequence of events."
-"SwiftUI is the shortest path to building great apps on *every* device."
-
-# References
-
-    https://developer.apple.com/documentation/swiftui
-    https://developer.apple.com/tutorials/swiftui
-    https://github.com/glimpseio/Presentations
-
---- 
-
-# [fit] Questions!
-
-
+### **ME**: Marc Prud'hommeaux <**marc@glimpse.io**>
+### **DOCS**: https://developer.apple.com/documentation/swiftui
+### **TUTORIALS**:  https://developer.apple.com/tutorials
+### **PRESENTATION**: https://github.com/glimpseio/Presentations
 
