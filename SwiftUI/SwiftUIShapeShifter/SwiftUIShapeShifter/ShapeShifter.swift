@@ -2,6 +2,7 @@
 //  SwiftUIShapeShifter
 //
 //  Created by Marc Prud'hommeaux on 7/30/19.
+//  https://github.com/glimpseio/Presentations/blob/master/SwiftUI/SwiftUIShapeShifter/SwiftUIShapeShifter/ShapeShifter.swift
 
 // MARK: Data Model
 struct ShapeShifterModel : Hashable, Codable {
