@@ -101,25 +101,6 @@ struct ShapeInspector: SwiftUI.View {
     }
 }
 
-struct UndoRedoButtons: SwiftUI.View {
-    @EnvironmentObject var env: ShapeShifterEnv
-
-    var body: some SwiftUI.View {
-        HStack {
-            Button("Undo") { self.env.undoManager?.undo() }
-                .disabled(self.env.undoManager?.canUndo == false)
-                .font(.title).buttonStyle(.default)
-
-            Spacer()
-
-            Button("Redo") { self.env.undoManager?.redo() }
-                .disabled(self.env.undoManager?.canRedo == false)
-                .font(.title).buttonStyle(.default)
-
-        }.padding()
-    }
-}
-
 /// A collection of sliders that modify a `ShapeShifterModel.HSL` model object.
 struct HSLSliders: SwiftUI.View {
     let label: String
@@ -175,6 +156,23 @@ struct PercentSlider: SwiftUI.View {
             Slider(value: $value, from: 0.0, through: 1.0)
             Text("\(value as NSNumber, formatter: Self.percentFormatter)")
         }
+    }
+}
+
+struct UndoRedoButtons: SwiftUI.View {
+    @EnvironmentObject var env: ShapeShifterEnv
+
+    var body: some SwiftUI.View {
+        HStack {
+            Button("Undo") { self.env.undoManager?.undo() }
+                .disabled(self.env.undoManager?.canUndo == false)
+                .font(.title).buttonStyle(.default)
+            Spacer()
+            Button("Redo") { self.env.undoManager?.redo() }
+                .disabled(self.env.undoManager?.canRedo == false)
+                .font(.title).buttonStyle(.default)
+
+        }.padding()
     }
 }
 
