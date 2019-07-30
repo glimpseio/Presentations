@@ -4,23 +4,24 @@
 //  Created by Marc Prud'hommeaux on 7/30/19.
 //  https://github.com/glimpseio/Presentations/blob/master/SwiftUI/SwiftUIShapeShifter/SwiftUIShapeShifter/ShapeShifter.swift
 
-// MARK: Data Model
+/// A model of a shape with a fill and an outline color
 struct ShapeShifterModel : Hashable, Codable {
-    enum ShapeKind : String, Hashable, Codable, CaseIterable {
-        case square, circle
-    }
-
     var kind = ShapeKind.circle
     var fill = HSL(hue: 0.66)
     var outline = HSL(hue: 0.08)
     var outlineWidth = 15.0
 
-    /// A model of a color
+    /// A Model of a Color
     struct HSL : Hashable, Codable {
         var hue = 0.0
         var saturation = 1.0
         var brightness = 1.0
         var opacity = 1.0
+    }
+
+    /// A Kind of Shape
+    enum ShapeKind : String, Hashable, Codable, CaseIterable {
+        case square, circle
     }
 }
 
@@ -44,7 +45,7 @@ extension ShapeShifterModel.HSL {
         Self(hue: 0.08), // orange
         Self(hue: 0.83, brightness: 0.50), // purple
         Self(hue: 0.08, saturation: 0.66, brightness: 0.60), // brown
-    Self(saturation: 0.00), // white
+        Self(saturation: 0.00), // white
     ]
 }
 
@@ -122,6 +123,7 @@ struct HSLSliders: SwiftUI.View {
 /// A picker for common colors
 struct SwatchPicker: SwiftUI.View  {
     @Binding var color: ShapeShifterModel.HSL
+
     var body: some SwiftUI.View {
         HStack {
             ForEach(ShapeShifterModel.HSL.swatches, id: \.self) { swatch in
@@ -207,6 +209,10 @@ final class ShapeShifterEnv : BindableObject {
             }
 
             willChange.send(newModel) // inform listeners of changes
+        }
+
+        didSet {
+
         }
     }
 }
