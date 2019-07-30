@@ -400,12 +400,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 ---
 
-# Nicities
-
-SwiftUI vs. Swift + Interface Builder:
-
----
-
 # API Design
 
 • Builder pattern
