@@ -196,6 +196,7 @@ import Combine
 final class ShapeShifterEnv : BindableObject {
     let willChange = Combine.PassthroughSubject<ShapeShifterModel, Never>()
     var undoManager: UndoManager? = nil
+
     var model = ShapeShifterModel() {
         willSet {
             let (oldModel, newModel) = (self.model, newValue)
@@ -212,7 +213,34 @@ final class ShapeShifterEnv : BindableObject {
         }
 
         didSet {
+            // serialize the data to the `UserDefaults` in the background
+            let saveData = self.model
+            let item = DispatchWorkItem { try? saveData.save() }
+            self.saveWorkItem?.cancel() // cancel any previous save request (e.g., debounce)
+            self.saveWorkItem = item
+            // save to user defaults in the background
+            DispatchQueue.global(qos: .background).async(execute: item)
+        }
+    }
 
+    /// The current outstanding work item to save
+    private var saveWorkItem: DispatchWorkItem? = nil
+}
+
+extension ShapeShifterModel {
+    /// Model is persisted to user defaults
+    func save() throws {
+        print("save")
+        let shapeData = try JSONEncoder().encode(self)
+        UserDefaults.standard.set(shapeData, forKey: "shapeData")
+    }
+
+    mutating func load() throws -> Bool {
+        if let data = UserDefaults.standard.data(forKey: "shapeData") {
+            self = try JSONDecoder().decode(Self.self, from: data)
+            return true
+        } else {
+            return false // no saved data to load
         }
     }
 }
@@ -233,6 +261,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
+            let _ = try? store.model.load() // load from defaults, ignoring erros
             let rootView = ShapeShifterRootView().environmentObject(store)
             window.rootViewController = UIHostingController(rootView: rootView)
             self.window = window
