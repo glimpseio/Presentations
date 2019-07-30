@@ -1,28 +1,3 @@
-
-```swift
-import SwiftUI                               // (NS/UI)Kit–agnostic
-
-struct ProfileEditor: View {                 // View is a Swift protocol
-    @Binding var profile: Profile            // @Binding is a property wrapper
-    @State private var showAdvanced: Bool    // @State is another property wrapper
-    var body: some View {                    // `some` is an "opaque type"
-        List {                               // @_functionBuilder ViewBuilder 
-            HStack {                         // Lightweight builder for a stack view
-                Text("Username").bold()      // Configure using a fluent API
-                Divider()                    // Where are the commas?
-                TextField($profile.username) // `$` derives a binding from @Binding
-            }
-            
-            Toggle(isOn: $showAdvanced) {    // `$` can derive from @State too
-                Text("Enable Notifications")
-            }
-        }
-    }
-}
-```
-
----
-
 # [fit] **SwiftUI**
 ## **Declarative** User-Interface Development 
 ### Marc Prud'hommeaux <*marc@glimpse.io*>
@@ -428,11 +403,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 # Nicities
 
 SwiftUI vs. Swift + Interface Builder:
-
-We no longer have to argue about programmatic or storyboard-based design, because SwiftUI gives us both at the same time.
-We no longer have to worry about creating source control problems when committing user interface work, because code is much easier to read and manage than storyboard XML.
-We no longer need to worry so much about stringly typed APIs – there are still some, but significantly fewer.
-We no longer need to worry about calling functions that don’t exist, because our user interface gets checked by the Swift compiler.
 
 ---
 
