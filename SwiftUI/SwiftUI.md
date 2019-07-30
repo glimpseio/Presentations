@@ -37,16 +37,16 @@ About Me
 
 ---
 
-# Demo
+# [fit] Demo: SwiftUIShapeShifter
+#### (complete app in 275 lines of code)
 
 ## [fit]`https://github.com/glimpseio/Presentations/`
-#### [fit] `…/blob/master/SwiftUI/SwiftUIShapeShifter/SwiftUIShapeShifter/ShapeShifter.swift`
+### [fit] `…/blob/master/SwiftUI/SwiftUIShapeShifter/SwiftUIShapeShifter/ShapeShifter.swift`
 
-# Disclaimer
 
-## Information current as of *yesterday* (July 29, 2019)
--  Xcode 11 beta 4
-- macOS 10.15 (“Catalina”) beta 4
+## Disclaimer
+### Sample current as of *yesterday* (July 29, 2019)
+####  Xcode 11 beta 4 / macOS 10.15 (“Catalina”) beta 4
 
 ---
 
@@ -472,10 +472,10 @@ Warts
 
 ---
 
-Tips
+# Tips
 
-  • Break up large views
-  • Keep view construction quick
+- Break up large views
+- Keep view construction quick
 
 ---
 
