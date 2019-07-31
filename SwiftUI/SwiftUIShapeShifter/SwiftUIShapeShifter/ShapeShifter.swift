@@ -69,9 +69,9 @@ struct ShapeInspector: SwiftUI.View {
             }
 
             Form {
-                HSLSliders(label: "Fill", color: $model.fill, shown: $showFill)
-                HSLSliders(label: "Outline", color: $model.outline, shown: $showOutline)
-                Slider(value: $model.outlineWidth, from: 0, through: 100).padding()
+                HSLSliders(label: "Fill Color", color: $model.fill, shown: $showFill)
+                HSLSliders(label: "Border Color", color: $model.outline, shown: $showOutline)
+                Slider(value: $model.outlineWidth, from: 0, through: 100).padding(15)
             }
 
             UndoRedoButtons()
